@@ -10,14 +10,14 @@
 	</parent>
 	<groupId>uk.nhs.england</groupId>
 	<artifactId>FHIR-Validation</artifactId>
-	<version>7.0.2</version>
+	<version>7.4.0</version>
 	<name>FHIR-Validation</name>
 	<description>HAPI FHIR Validator using Spring Boot</description>
 
 	<properties>
 		<java.version>20</java.version>
 		<kotlin.version>1.9.22</kotlin.version>
-		<fhir.version>7.0.2</fhir.version>
+		<fhir.version>7.4.0</fhir.version>
 		<swagger_version>2.2.20</swagger_version>
 		<parser_version>2.1.20</parser_version>
 		<jackson_databind_version>2.17.0</jackson_databind_version>
