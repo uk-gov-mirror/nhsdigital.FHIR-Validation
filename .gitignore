@@ -1,50 +1,6 @@
-HELP.md
+.env
 target/
-src/main/resources/validation.json
-src/main/resources/nhs-validation.json
-src/main/resources/implementationGuides/*.tgz
-src/main/resources/static/web/*.*
-src/main/resources/static/app/*.*
-src/uk.nhs.digital.fhir.fwoa.main/resources/*.tgz
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-**/src/uk.nhsdigital.fhir.fwoa.main/resources/*.tgz
-src/main/resources/*.tgz
-**/src/main/resources/*.tgz
-
-/input-cache/
-/output/
-/temp/
-/template/
-/fsh-generated/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+*.jar
+bin/
 .vscode/
-/interoperability-standards-tools-skunkworks/.angular/cache/17.1.3/angular-webpack/a1dba4dffcba8d84d9c03b2ef4d54bb9f8f40d2d/0.pack
-/interoperability-standards-tools-skunkworks/.angular/cache/17.1.3/angular-webpack/a1dba4dffcba8d84d9c03b2ef4d54bb9f8f40d2d/index.pack
+java.util.Map

@@ -1,0 +1,122 @@
+server:
+  port: 8080
+  tomcat:
+    relaxed-query-chars: "|"
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "health"
+  endpoint:
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+    health:
+      enabled: true
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: [ "livenessState", "readinessState" ]
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+spring:
+  application:
+    name: "@project.artifactId@"
+  ai:
+    mcp:
+      server:
+        name: FHIR MCP Server
+        version: 1.0.0
+        instructions: "This server provides access to a FHIR RESTful API. You can use it to query FHIR resources, perform operations, and retrieve data in a structured format."
+        enabled: true
+        streamable-http:
+          mcp-endpoint: /mcp/messages
+  main:
+    allow-bean-definition-overriding: false
+    allow-circular-references: true
+    banner-mode: off
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+    fail-on-missing-locations: false
+  datasource:
+    url: jdbc:h2:mem:test_mem
+    username: sa
+    password: null
+    driver-class-name: org.h2.Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: false
+        dialect: ca.uhn.fhir.jpa.model.dialect.HapiFhirH2Dialect
+        hbm2ddl:
+          auto: update
+        jdbc:
+          batch_size: 20
+        cache:
+          use_query_cache: false
+          use_second_level_cache: false
+          use_structured_entries: false
+          use_minimal_puts: false
+
+hapi:
+  fhir:
+    terminology:
+      valueset_preexpansion_mode: IGNORE                # Never use pre-expanded, always expand live
+      valueset_expansion_mode: USE_EXPANSION_OPERATION  # Call $expand on Ontoserver
+      valueset_membership_mode: USE_VALIDATE_CODE_OPERATION           # Check membership via expansion result
+      code_lookup_mode: USE_VALIDATE_CODE_OPERATION     # Individual code lookups go to Ontoserver
+      remote_terminology:
+        - url: '${ONTO_SERVER_URL}'
+          client_interceptor_beans:
+            - terminologyInterceptor
+      # Disable the background pre-expansion scheduler entirely
+      # It cannot handle SNOMED filter-based ValueSets locally
+      deferred_indexing_for_codesystems_of_size: 0
+    schedule_task_enabled: false
+
+    logical_urls:
+      - http://terminology.hl7.org/*
+      - https://terminology.hl7.org/*
+      - http://snomed.info/sct*          # SNOMED CT
+      - https://dmd.nhs.uk*              # dm+d
+      - http://hl7.org/fhir/sid/icd-10* # ICD-10
+      - https://icd.who.int/browse10*    # ICD-10 alternative URL
+      - http://read.info*                # READ codes
+      - https://nicip.nhs.uk*            # NICIP
+      - http://www.datadictionary.nhs.uk/data_dictionary/attributes/o/opcs_4* # OPCS-4
+
+    #implementationguides:
+    #  ukcore:
+    #    name: fhir.r4.ukcore.stu3.currentbuild
+    #    version: 0.28.0-pre-release
+    #    reloadExisting: false
+    #    installMode: STORE_AND_INSTALL
+
+    data:
+      search_parameter_mode: USE_SEARCH_PARAMETERS
+      terminology_parameter_mode: USE_VALUE_SET_URL
+      profile_mode: DECLARED
+
+    custom-bean-packages:
+      - com.nhs
+
+    cr:
+      enabled: false
+      caregaps:
+        reporter: "default"
+        section_author: "default"
