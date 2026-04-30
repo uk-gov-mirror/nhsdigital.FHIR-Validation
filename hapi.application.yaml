@@ -75,6 +75,7 @@ spring:
 
 hapi:
   fhir:
+    ig_runtime_upload_enabled: true
     terminology:
       valueset_preexpansion_mode: IGNORE                # Never use pre-expanded, always expand live
       valueset_expansion_mode: USE_EXPANSION_OPERATION  # Call $expand on Ontoserver
