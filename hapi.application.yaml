@@ -257,7 +257,7 @@ hapi:
           # enable_expression_caching: true
         terminology:
           valueset_preexpansion_mode: IGNORE         # USE_IF_PRESENT | REQUIRE | IGNORE
-          valueset_expansion_mode: USE_EXPANSION_OPERATION   # AUTO | USE_EXPANSION_OPERATION | PERFORM_NAIVE_EXPANSION
+          valueset_expansion_mode: USE_EXPAND_OPERATION   # AUTO | USE_EXPANSION_OPERATION | PERFORM_NAIVE_EXPANSION
           valueset_membership_mode: USE_VALIDATE_CODE_OPERATION            # AUTO | USE_VALIDATE_CODE_OPERATION | USE_EXPANSION
           code_lookup_mode: USE_VALIDATE_CODE_OPERATION      # AUTO | USE_VALIDATE_CODE_OPERATION | USE_CODESYSTEM_URL
           remote_terminology:
