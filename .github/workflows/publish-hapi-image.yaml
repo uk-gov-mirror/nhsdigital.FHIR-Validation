@@ -28,7 +28,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push image (latest)
+      - name: Build and push image (latest) 
         run: |
           IMAGE=ghcr.io/nhsdigital/validation-service-fhir-r4:latest
           docker build -t $IMAGE .
