@@ -10,5 +10,8 @@ services:
       ONTO_CLIENT_ID: ${ONTO_CLIENT_ID}
       ONTO_CLIENT_SECRET: ${ONTO_CLIENT_SECRET}
       hapi_fhir_custom_bean_packages: com.nhs
+      JAVA_OPTS: "-Xmx6g -Xms2g" # ← Increased to 6GB max
     volumes:
       - ./hapi.application.yaml:/app/config/application.yaml:ro
+    mem_limit: 7g # ← Increased to 7GB
+    memswap_limit: 7g
