@@ -1,6 +1,12 @@
 # -------------------------------------------------------------------------------------
 # Server & Spring Boot
 # -------------------------------------------------------------------------------------
+logging:
+  level:
+    ca.uhn.fhir.jpa.packages: DEBUG
+    ca.uhn.fhir.log.terminology_troubleshooting: DEBUG
+
+
 server:
   # Uncomment to serve FHIR under a non-default context path (e.g., /example/path/fhir)
   # servlet:
@@ -193,15 +199,11 @@ hapi:
     # -------------------------------------------------------------------------------
     # B. Implementation Guides (IG) & Package Install
     # -------------------------------------------------------------------------------
-    ig_runtime_upload_enabled: true
+    # ig_runtime_upload_enabled: true
     validate_resource_status_for_package_upload: false   # default true
-    install_transitive_ig_dependencies: false
-    # implementationguides:
-    #   swiss:
-    #     name: swiss.mednet.fhir
-    #     version: 0.8.0
-    #     reloadExisting: false
-    #     installMode: STORE_AND_INSTALL
+    install_transitive_ig_dependencies: true
+
+
     #   ips_1_0_0:
     #     packageUrl: https://costateixeira.github.io/smart-ips-pilgrimage-fulltest/package.tgz
     #     name: smart.who.int.ips-pilgrimage-test
@@ -265,9 +267,9 @@ hapi:
           valueset_membership_mode: USE_VALIDATE_CODE_OPERATION            # AUTO | USE_VALIDATE_CODE_OPERATION | USE_EXPANSION
           code_lookup_mode: USE_VALIDATE_CODE_OPERATION      # AUTO | USE_VALIDATE_CODE_OPERATION | USE_CODESYSTEM_URL
           remote_terminology:
-          - url: '${ONTO_SERVER_URL}'
-            client_interceptor_beans:
-            - terminologyInterceptor
+            - url: '${ONTO_SERVER_URL}'
+              client_interceptor_beans:
+                - terminologyInterceptor
         data:
           search_parameter_mode: USE_SEARCH_PARAMETERS       # AUTO | USE_SEARCH_PARAMETERS | FILTER_IN_MEMORY
           terminology_parameter_mode: USE_VALUE_SET_URL       # AUTO | USE_VALUE_SET_URL | USE_INLINE_CODES | FILTER_IN_MEMORY
@@ -355,21 +357,21 @@ hapi:
     # pre_expand_value_sets_max_count: 1000
     # maximum_expansion_size: 1000
     logical_urls:
-    - http://terminology.hl7.org/*
-    - https://terminology.hl7.org/*
-    - http://snomed.info/*
-    - https://snomed.info/*
+      - http://terminology.hl7.org/*
+      - https://terminology.hl7.org/*
+      - http://snomed.info/*
+      - https://snomed.info/*
       #- http://unitsofmeasure.org/*
       #- https://unitsofmeasure.org/*
       #- http://loinc.org/*
       #- https://loinc.org/*
       # additional logical urls as per https://digital.nhs.uk/services/terminology-server
-    - https://dmd.nhs.uk*
-    - http://hl7.org/fhir/sid/icd-10*
-    - https://icd.who.int/browse10*
-    - http://read.info*
-    - https://nicip.nhs.uk*
-    - http://www.datadictionary.nhs.uk/data_dictionary/attributes/o/opcs_4*
+      - https://dmd.nhs.uk*
+      - http://hl7.org/fhir/sid/icd-10*
+      - https://icd.who.int/browse10*
+      - http://read.info*
+      - https://nicip.nhs.uk*
+      - http://www.datadictionary.nhs.uk/data_dictionary/attributes/o/opcs_4*
 
     # -------------------------------------------------------------------------------
     # J. Partitioning & Multitenancy
@@ -388,7 +390,7 @@ hapi:
     cors:
       # allow_Credentials: false
       allowed_origin:
-      - "*"
+        - "*"
       # If you enable allow_Credentials=true, use explicit origins instead of "*".
       # Optional overrides. If omitted, built-in defaults are used.
       # allowed_headers:
@@ -435,7 +437,7 @@ hapi:
     # comma-separated package names, will be @ComponentScan'ed by Spring to allow for creating custom Spring beans
 
     custom-bean-packages:
-    - com.nhs
+      - com.nhs
     # custom-interceptor-classes:
     # custom-provider-classes:
     # store_meta_source_information: NONE
@@ -516,22 +518,19 @@ hapi:
         refuse_to_fetch_third_party_urls: false
         fhir_version: R4
 
-
     implementationguides:
       fhir-r4-ukcore-stu2:
         name: fhir.r4.ukcore.stu2
         version: 2.0.2
         installMode: STORE_AND_INSTALL
-      eu-base:
-        packageUrl: https://hl7.eu/fhir/base/xtehr/package.tgz
-        name: hl7.fhir.eu.base
-        version: 2.0.0-gamma
-        reloadExisting: false
-        installMode: STORE_AND_INSTALL
-      eu-lab:
-        packageUrl: https://hl7.eu/fhir/laboratory/xtehr/package.tgz
+        fetchDependencies: true
+        dependencyExcludes:
+          - hl7.fhir.uv.extensions.r4
+      hl7-fhir-eu-laboratory:
         name: hl7.fhir.eu.laboratory
-        version: 2.0.0-alpha
-        reloadExisting: false
+        version: 2.0.0
         installMode: STORE_AND_INSTALL
-
+        fetchDependencies: true
+        dependencyExcludes:
+          - hl7.fhir.uv.extensions.r4
+          - hl7.terminology.r4
