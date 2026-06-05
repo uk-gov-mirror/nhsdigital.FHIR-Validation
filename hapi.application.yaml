@@ -17,26 +17,26 @@ server:
     relaxed-query-chars: "|"
 
 management:
-  # Actuator endpoints: only /actuator/health exposed by default
   endpoints:
-    enabled-by-default: false
+    access:
+      default: none
     web:
       exposure:
-        include: "health"  # or "info,health,prometheus,metrics" or "*" for all
+        include: "health,info,metrics,prometheus"
   endpoint:
     info:
-      enabled: true
+      access: unrestricted
     metrics:
-      enabled: true
+      access: unrestricted
     health:
-      enabled: true
+      access: unrestricted
       probes:
         enabled: true
       group:
         liveness:
           include: ["livenessState", "readinessState"]
     prometheus:
-      enabled: true
+      access: unrestricted
   prometheus:
     metrics:
       export:

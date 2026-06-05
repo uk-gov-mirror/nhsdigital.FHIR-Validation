@@ -1,4 +1,4 @@
-FROM hapiproject/hapi:v8.8.0-1 AS base
+FROM hapiproject/hapi:v8.10.0-1 AS base
 
 FROM eclipse-temurin:21-jdk
 
