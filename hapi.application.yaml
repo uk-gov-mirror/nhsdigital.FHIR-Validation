@@ -521,20 +521,3 @@ hapi:
         server_address: 'http://localhost:8080/fhir'
         refuse_to_fetch_third_party_urls: false
         fhir_version: R4
-
-    implementationguides:
-      fhir-r4-ukcore-stu2:
-        name: fhir.r4.ukcore.stu2
-        version: 2.0.2
-        installMode: STORE_AND_INSTALL
-        fetchDependencies: true
-        dependencyExcludes:
-          - hl7.fhir.uv.extensions.r4
-      hl7-fhir-eu-laboratory:
-        name: hl7.fhir.eu.laboratory
-        version: 2.0.0
-        installMode: STORE_AND_INSTALL
-        fetchDependencies: true
-        dependencyExcludes:
-          - hl7.fhir.uv.extensions.r4
-          - hl7.terminology.r4
