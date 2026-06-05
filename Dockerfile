@@ -1,5 +1,4 @@
 FROM hapiproject/hapi:v8.10.0-1 AS base
-
 FROM eclipse-temurin:21-jdk
 
 # Copy the war from the base image
