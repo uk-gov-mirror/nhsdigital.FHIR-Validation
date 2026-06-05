@@ -200,7 +200,7 @@ hapi:
     # B. Implementation Guides (IG) & Package Install
     # -------------------------------------------------------------------------------
     ig_runtime_upload_enabled: true
-    # validate_resource_status_for_package_upload: true # if set to false breaks due to trying to install abstract base type "DomainResource"
+    validate_resource_status_for_package_upload: false # if set to false breaks due to trying to install abstract base type "DomainResource"
     install_transitive_ig_dependencies: true # true = install package dependencies 
     # implementationguides:
     #   swiss:
@@ -521,3 +521,4 @@ hapi:
         server_address: 'http://localhost:8080/fhir'
         refuse_to_fetch_third_party_urls: false
         fhir_version: R4
+
