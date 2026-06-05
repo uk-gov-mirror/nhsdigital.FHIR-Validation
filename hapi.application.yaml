@@ -28,7 +28,7 @@ management:
         enabled: true
       group:
         liveness:
-          include: [ "livenessState", "readinessState" ]
+          include: ["livenessState", "readinessState"]
     prometheus:
       enabled: true
   prometheus:
@@ -79,7 +79,9 @@ spring:
       server:
         name: FHIR MCP Server
         version: 1.0.0
-        instructions: "This server provides access to a FHIR RESTful API. You can use it to query FHIR resources, perform operations, and retrieve data in a structured format."
+        instructions: "This server provides access to a FHIR RESTful API. You can
+          use it to query FHIR resources, perform operations, and retrieve data in
+          a structured format."
         enabled: true
         streamable-http:
           mcp-endpoint: /mcp/messages
@@ -95,7 +97,8 @@ spring:
 
   autoconfigure:
     # This exclude is only needed for setups not using Elasticsearch where the elasticsearch sniff is not needed.
-    exclude: org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration
+    exclude: 
+      org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration
 
   flyway:
     enabled: false
@@ -106,7 +109,7 @@ spring:
     # url: "jdbc:h2:file:./target/database/h2"
     url: jdbc:h2:mem:test_mem
     username: sa
-    password: null
+    password:
     driver-class-name: org.h2.Driver
     # max-active: 15     # (ignored with HikariCP; use hikari.maximum-pool-size)
     hikari:
@@ -120,7 +123,8 @@ spring:
         # Hibernate dialect is auto-detected except for H2/Postgres.
         # If using H2:     ca.uhn.fhir.jpa.model.dialect.HapiFhirH2Dialect
         # If using Postgres: ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect
-        dialect: ${HIBERNATE_DIALECT:ca.uhn.fhir.jpa.model.dialect.HapiFhirH2Dialect}
+        dialect: 
+          ${HIBERNATE_DIALECT:ca.uhn.fhir.jpa.model.dialect.HapiFhirH2Dialect}
 
         # --- Optional Hibernate DDL & tuning (commented out from source) ---
         hbm2ddl:
@@ -190,8 +194,8 @@ hapi:
     # B. Implementation Guides (IG) & Package Install
     # -------------------------------------------------------------------------------
     ig_runtime_upload_enabled: true
-    # validate_resource_status_for_package_upload: false   # default true
-    # install_transitive_ig_dependencies: true
+    validate_resource_status_for_package_upload: false   # default true
+    install_transitive_ig_dependencies: false
     # implementationguides:
     #   swiss:
     #     name: swiss.mednet.fhir
@@ -261,9 +265,9 @@ hapi:
           valueset_membership_mode: USE_VALIDATE_CODE_OPERATION            # AUTO | USE_VALIDATE_CODE_OPERATION | USE_EXPANSION
           code_lookup_mode: USE_VALIDATE_CODE_OPERATION      # AUTO | USE_VALIDATE_CODE_OPERATION | USE_CODESYSTEM_URL
           remote_terminology:
-            - url: '${ONTO_SERVER_URL}'
-              client_interceptor_beans:
-                - terminologyInterceptor
+          - url: '${ONTO_SERVER_URL}'
+            client_interceptor_beans:
+            - terminologyInterceptor
         data:
           search_parameter_mode: USE_SEARCH_PARAMETERS       # AUTO | USE_SEARCH_PARAMETERS | FILTER_IN_MEMORY
           terminology_parameter_mode: USE_VALUE_SET_URL       # AUTO | USE_VALUE_SET_URL | USE_INLINE_CODES | FILTER_IN_MEMORY
@@ -351,21 +355,21 @@ hapi:
     # pre_expand_value_sets_max_count: 1000
     # maximum_expansion_size: 1000
     logical_urls:
-      - http://terminology.hl7.org/*
-      - https://terminology.hl7.org/*
-      - http://snomed.info/*
-      - https://snomed.info/*
+    - http://terminology.hl7.org/*
+    - https://terminology.hl7.org/*
+    - http://snomed.info/*
+    - https://snomed.info/*
       #- http://unitsofmeasure.org/*
       #- https://unitsofmeasure.org/*
       #- http://loinc.org/*
       #- https://loinc.org/*
       # additional logical urls as per https://digital.nhs.uk/services/terminology-server
-      - https://dmd.nhs.uk*              
-      - http://hl7.org/fhir/sid/icd-10* 
-      - https://icd.who.int/browse10*    
-      - http://read.info*                
-      - https://nicip.nhs.uk*            
-      - http://www.datadictionary.nhs.uk/data_dictionary/attributes/o/opcs_4* 
+    - https://dmd.nhs.uk*
+    - http://hl7.org/fhir/sid/icd-10*
+    - https://icd.who.int/browse10*
+    - http://read.info*
+    - https://nicip.nhs.uk*
+    - http://www.datadictionary.nhs.uk/data_dictionary/attributes/o/opcs_4*
 
     # -------------------------------------------------------------------------------
     # J. Partitioning & Multitenancy
@@ -384,7 +388,7 @@ hapi:
     cors:
       # allow_Credentials: false
       allowed_origin:
-        - "*"
+      - "*"
       # If you enable allow_Credentials=true, use explicit origins instead of "*".
       # Optional overrides. If omitted, built-in defaults are used.
       # allowed_headers:
@@ -431,10 +435,9 @@ hapi:
     # comma-separated package names, will be @ComponentScan'ed by Spring to allow for creating custom Spring beans
 
     custom-bean-packages:
-      - com.nhs
+    - com.nhs
     # custom-interceptor-classes:
     # custom-provider-classes:
-    
     # store_meta_source_information: NONE
     # bundle_batch_pool_size: 10
     # bundle_batch_pool_max_size: 50
@@ -503,7 +506,6 @@ hapi:
     # R. LastN (analytics)
     # -------------------------------------------------------------------------------
     # lastn_enabled: true
-    
     # -------------------------------------------------------------------------------
     # S. Testers (webui)
     # -------------------------------------------------------------------------------
@@ -513,3 +515,23 @@ hapi:
         server_address: 'http://localhost:8080/fhir'
         refuse_to_fetch_third_party_urls: false
         fhir_version: R4
+
+
+    implementationguides:
+      fhir-r4-ukcore-stu2:
+        name: fhir.r4.ukcore.stu2
+        version: 2.0.2
+        installMode: STORE_AND_INSTALL
+      eu-base:
+        packageUrl: https://hl7.eu/fhir/base/xtehr/package.tgz
+        name: hl7.fhir.eu.base
+        version: 2.0.0-gamma
+        reloadExisting: false
+        installMode: STORE_AND_INSTALL
+      eu-lab:
+        packageUrl: https://hl7.eu/fhir/laboratory/xtehr/package.tgz
+        name: hl7.fhir.eu.laboratory
+        version: 2.0.0-alpha
+        reloadExisting: false
+        installMode: STORE_AND_INSTALL
+
