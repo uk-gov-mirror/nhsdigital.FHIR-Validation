@@ -199,17 +199,24 @@ hapi:
     # -------------------------------------------------------------------------------
     # B. Implementation Guides (IG) & Package Install
     # -------------------------------------------------------------------------------
-    ig_runtime_upload_enabled: true
-    validate_resource_status_for_package_upload: false # if set to false breaks due to trying to install abstract base type "DomainResource"
-    install_transitive_ig_dependencies: true # true = install package dependencies 
-    # implementationguides:
+
+    validate_resource_status_for_package_upload: false # seting to false allows validation against draft profiles
+    install_transitive_ig_dependencies: true # installs the dependencies of the package depencies (recursively) if fetchDependencies is set to true for the package
+    implementationguides:
+      #pathology:
+        #name: fhir.r4.nhsengland.pathology
+        #version: 0.2.4-alpha 
+        #reloadExisting: false
+        #fetchDependencies: true #installs package dependencies
+        #installMode: STORE_AND_INSTALL
+        #dependencyExcludes: ["hl7.terminology.r4", "hl7.fhir.uv.extensions.r4"] #excluded as there's a null error in hl7.terminology.r4 6.3.0 & hl7.fhir.uv.extensions.r4#5.2.0 Unknown resource name "DeviceUsage" (this name is not known in FHIR version "R4"). Add updated versions of these packages separately if needed.
     #   swiss:
     #     name: swiss.mednet.fhir
     #     version: 0.8.0
     #     reloadExisting: false
     #     installMode: STORE_AND_INSTALL
     #   ips_1_0_0:
-    #     packageUrl: https://costateixeira.github.io/smart-ips-pilgrimage-fulltest/package.tgz
+    #     packageUrl: https://costateixeira.github.io/smart-ips-pilgrimage-fulltest/package.tgz # allows for installing of private packages hosted on the web
     #     name: smart.who.int.ips-pilgrimage-test
     #     version: 0.1.0
     #     installMode: STORE_AND_INSTALL
