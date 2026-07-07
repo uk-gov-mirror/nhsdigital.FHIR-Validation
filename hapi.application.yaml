@@ -202,7 +202,7 @@ hapi:
 
     validate_resource_status_for_package_upload: false # seting to false allows validation against draft profiles
     install_transitive_ig_dependencies: true # installs the dependencies of the package depencies (recursively) if fetchDependencies is set to true for the package
-    implementationguides:
+    #implementationguides:
       #pathology:
         #name: fhir.r4.nhsengland.pathology
         #version: 0.2.4-alpha 
