@@ -46,9 +46,21 @@ public class OpenApiCustomizer extends OncePerRequestFilter {
         String originalBody = new String(wrapper.getContentAsByteArray(), StandardCharsets.UTF_8);
         String contentType = wrapper.getContentType();
         String acceptHeader = request.getHeader("Accept");
-        boolean isYaml = (contentType != null && contentType.contains("yaml"))
-                || (acceptHeader != null && acceptHeader.contains("yaml"))
-                || !request.getRequestURI().contains("format=json");
+        boolean isYaml;
+        if (contentType != null && contentType.contains("json")) {
+            isYaml = false;
+        } else if (contentType != null && contentType.contains("yaml")) {
+            isYaml = true;
+        } else if (acceptHeader != null && acceptHeader.contains("json")) {
+            isYaml = false;
+        } else if (acceptHeader != null && acceptHeader.contains("yaml")) {
+            isYaml = true;
+        } else {
+            // No explicit signal from Content-Type, Accept, or query param —
+            // HAPI 8.10 defaults to YAML here, but Swagger UI (and most tooling)
+            // assumes JSON unless told otherwise. Force JSON as our default.
+            isYaml = request.getRequestURI().contains("format=yaml");
+}
 
         try {
             ObjectMapper reader = isYaml ? yamlMapper : jsonMapper;
@@ -58,6 +70,7 @@ public class OpenApiCustomizer extends OncePerRequestFilter {
             addXmlContentTypes(root);
 
             byte[] modified = writer.writeValueAsBytes(root);
+            response.setContentType(isYaml ? "application/yaml" : "application/json");
             response.setContentLength(modified.length);
             response.getOutputStream().write(modified);
 

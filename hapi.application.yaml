@@ -203,14 +203,28 @@ hapi:
     validate_resource_status_for_package_upload: false # seting to false allows validation against draft profiles
     install_transitive_ig_dependencies: true # installs the dependencies of the package depencies (recursively) if fetchDependencies is set to true for the package
     implementationguides:
-      #pathology:
-        #name: fhir.r4.nhsengland.pathology
-        #version: 0.2.4-alpha 
-        #reloadExisting: false
-        #fetchDependencies: true #installs package dependencies
-        #installMode: STORE_AND_INSTALL
-        #dependencyExcludes: ["hl7.terminology.r4", "hl7.fhir.uv.extensions.r4"] #excluded as there's a null error in hl7.terminology.r4 6.3.0 & hl7.fhir.uv.extensions.r4#5.2.0 Unknown resource name "DeviceUsage" (this name is not known in FHIR version "R4"). Add updated versions of these packages separately if needed.
-    #   swiss:
+    #  pathology:
+    #    name: fhir.r4.nhsengland.pathology
+    #    version: 0.2.4-alpha 
+    #    reloadExisting: false
+    #    fetchDependencies: true #installs package dependencies
+    #    installMode: STORE_AND_INSTALL
+    #    dependencyExcludes: ["hl7.terminology.r4", "hl7.fhir.uv.extensions.r4"] #excluded as there's a null error in hl7.terminology.r4 6.3.0 & hl7.fhir.uv.extensions.r4#5.2.0 Unknown resource name "DeviceUsage" (this name is not known in FHIR version "R4"). Add updated versions of these packages separately if needed.
+    #  core:
+    #    name: hl7.fhir.r4.core
+    #    version: 4.0.1
+    #    reloadExisting: false
+    #    fetchDependencies: true #installs package dependencies
+    #    installMode: STORE_AND_INSTALL
+    #    dependencyExcludes: ["hl7.terminology.r4", "hl7.fhir.uv.extensions.r4"]
+      ukcore:    
+        name: fhir.r4.ukcore.stu3.currentbuild
+        version: 0.29.0-pre-release
+        reloadExisting: false
+        fetchDependencies: true #installs package dependencies
+        installMode: STORE_AND_INSTALL
+        dependencyExcludes: ["hl7.terminology.r4", "hl7.fhir.uv.extensions.r4"]
+    # swiss:
     #     name: swiss.mednet.fhir
     #     version: 0.8.0
     #     reloadExisting: false
@@ -529,3 +543,4 @@ hapi:
         refuse_to_fetch_third_party_urls: false
         fhir_version: R4
 
+  
