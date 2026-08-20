@@ -5,6 +5,7 @@ logging:
   level:
     ca.uhn.fhir.jpa.packages: DEBUG
     ca.uhn.fhir.log.terminology_troubleshooting: DEBUG
+    com.nhs: DEBUG
 
 
 server:
